@@ -11,8 +11,8 @@ typedef enum tradeType {BUY, SELL} TradeType;
 
 typedef struct currency
 {
-    char symbol[4];
-    char name[16];
+    GString *symbol;
+    GString *name;
 } Currency;
 
 typedef struct currencyPair
@@ -29,48 +29,47 @@ typedef struct active
 
 typedef struct order
 {
-    unsigned int id;
+    guint32 id;
     CurrencyPair *pair;
     OrderType type;
     double rate;
     double volume;
-    unsigned int date;
+    GDateTime *createdAt;
 } Order;
 
-typedef struct depthRow
+typedef struct depthItem
 {
     double rate;
     double volume;
-} DepthRow;
+} DepthItem;
 
-typedef struct depth
-{
-    DepthSide *bids;
-    DepthSide *asks;
+typedef struct depth {
+    GHashTable *bids;
+    GHashTable *asks;
 } Depth;
 
 typedef struct trade
 {
-    unsigned int id;
+    guint32 id;
     CurrencyPair *pair;
     TradeType type;
     double rate;
     double volume;
-    unsigned int date;
+    GDateTime *createdAt;
 } Trade;
 
-Currency * plnx_create_currency(char *, char *);
+Currency * plnx_currency_new(gchar *, gchar *);
 
-CurrencyPair * plnx_create_currency_pair(Currency *, Currency *);
+CurrencyPair * plnx_currency_pair_new(Currency *, Currency *);
 
-Active * plnx_create_active(Currency *, double);
+Active * plnx_active_new(Currency *, double);
 
-Order * plnx_create_order(unsigned int, CurrencyPair *, OrderType, double, double, unsigned int);
+Order * plnx_order_new(guint32, CurrencyPair *, OrderType, double, double, GDateTime *);
 
-Depth * plnx_create_depth();
+Depth * plnx_depth_new();
 
-DepthRow * plnx_create_depth_row(double, double);
+DepthItem * plnx_depth_item_new(double, double);
 
-Trade * plnx_create_trade(unsigned int, CurrencyPair *, TradeType, double, double, unsigned int);
+Trade * plnx_trade_new(guint32, CurrencyPair *, TradeType, double, double, GDateTime *); 
 
 #endif
