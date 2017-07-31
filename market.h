@@ -3,6 +3,7 @@
 
 #include <stdlib.h>
 #include <stdbool.h>
+#include <glib-2.0/glib.h>
 
 typedef enum orderType {BID, ASK} OrderType;
 
@@ -40,13 +41,7 @@ typedef struct depthRow
 {
     double rate;
     double volume;
-    struct DepthRow *next;
 } DepthRow;
-
-typedef struct depthSide
-{
-    struct DepthRow *top;
-} DepthSide;
 
 typedef struct depth
 {
@@ -73,8 +68,6 @@ Active * plnx_create_active(Currency *, double);
 Order * plnx_create_order(unsigned int, CurrencyPair *, OrderType, double, double, unsigned int);
 
 Depth * plnx_create_depth();
-
-DepthSide * plnx_create_depth_side();
 
 DepthRow * plnx_create_depth_row(double, double);
 

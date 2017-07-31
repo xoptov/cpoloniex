@@ -51,20 +51,11 @@ Depth * plnx_create_depth()
     return d;
 }
 
-DepthSide * plnx_create_depth_side()
-{
-    DepthSide *side = (DepthSide *)malloc(sizeof(DepthSide));
-    side->top = NULL;
-
-    return side;
-}
-
 DepthRow * plnx_create_depth_row(double rate, double volume)
 {
     DepthRow *row = (DepthRow *)malloc(sizeof(DepthRow));
     row->rate = rate;
     row->volume = volume;
-    row->next = NULL;
 
     return row;
 }
